@@ -1,4 +1,5 @@
 import GameObject from "./gameObjects";
+import Overworld from "./overworld";
 import Person from "./person";
 import utils from "./utils";
 
@@ -13,12 +14,20 @@ export default class OverworldMap {
     this.upperImage.src = config.upperSrc;
   }
 
-  drawLowerImage(ctx) {
-    ctx.drawImage(this.lowerImage, 0, 0);
+  drawLowerImage(ctx, cameraPerson) {
+    ctx.drawImage(
+      this.lowerImage,
+      utils.withGrid(10.5) - cameraPerson.x,
+      utils.withGrid(6) - cameraPerson.y
+    );
   }
 
-  drawUpperImage(ctx) {
-    ctx.drawImage(this.upperImage, 0, 0);
+  drawUpperImage(ctx, cameraPerson) {
+    ctx.drawImage(
+      this.upperImage,
+      utils.withGrid(10.5) - cameraPerson.x,
+      utils.withGrid(6) - cameraPerson.y
+    );
   }
 }
 
@@ -34,11 +43,11 @@ if (typeof window !== "undefined") {
           x: utils.withGrid(5),
           y: utils.withGrid(6),
         }),
-        // npc1: new Person({
-        //   x: utils.withGrid(9),
-        //   y: utils.withGrid(7),
-        //   src: "/images/characters/people/npc1.png",
-        // }),
+        npc1: new Person({
+          x: utils.withGrid(9),
+          y: utils.withGrid(7),
+          src: "/images/characters/people/npc1.png",
+        }),
       },
     },
     kitchen: {

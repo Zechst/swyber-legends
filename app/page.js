@@ -17,9 +17,9 @@ export default function Main() {
       <div className="w-full h-screen bg-gray-700 flex justify-center items-center">
         <div
           id="game-container"
-          className="game-container h-56 relative border-2 rounded-md scale-300 translate-y-2/4"
+          className="game-container w-[352px] h-[198px] relative border-2 rounded-md scale-300 translate-y-1/4"
         >
-          <canvas id="game-canvas" className="w-full"></canvas>
+          <canvas id="game-canvas" className="w-full h-full"></canvas>
         </div>
       </div>
       <Init /> {/* Ensure Init is called here */}

@@ -1,3 +1,5 @@
+import utils from "./utils";
+
 export default class Sprite {
   constructor(config) {
     //Set up the image
@@ -48,7 +50,7 @@ export default class Sprite {
         [0, 3],
       ],
     };
-    this.currentAnimation = "walk-down"; //config.currentAnimation || "idle-down";
+    this.currentAnimation = config.currentAnimation || "idle-down";
     this.currentAnimationFrame = 0;
 
     this.animationFrameLimit = config.animationFrameLimit || 8;
@@ -86,9 +88,9 @@ export default class Sprite {
     }
   }
 
-  draw(ctx) {
-    const x = this.gameObject.x - 8;
-    const y = this.gameObject.y - 18;
+  draw(ctx, cameraPerson) {
+    const x = this.gameObject.x - 8 + utils.withGrid(10.5) - cameraPerson.x;
+    const y = this.gameObject.y - 18 + utils.withGrid(6) - cameraPerson.y;
 
     this.isShadowLoaded && ctx.drawImage(this.shadow, x, y);
 
