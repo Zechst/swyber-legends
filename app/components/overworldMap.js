@@ -34,11 +34,11 @@ if (typeof window !== "undefined") {
           x: utils.withGrid(5),
           y: utils.withGrid(6),
         }),
-        npc1: new Person({
-          x: utils.withGrid(9),
-          y: utils.withGrid(7),
-          src: "/images/characters/people/npc1.png",
-        }),
+        // npc1: new Person({
+        //   x: utils.withGrid(9),
+        //   y: utils.withGrid(7),
+        //   src: "/images/characters/people/npc1.png",
+        // }),
       },
     },
     kitchen: {
