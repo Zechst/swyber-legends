@@ -1,4 +1,5 @@
 import GameObject from "./gameObjects";
+import OverworldMap from "./overworldMap";
 
 export default class Person extends GameObject {
   constructor(config) {
@@ -8,47 +9,58 @@ export default class Person extends GameObject {
     this.isPlayerControlled = config.isPlayerControlled || false;
 
     this.directionUpdate = {
-      "up": ["y", -1],
-      "down": ["y", 1],
-      "left": ["x", -1],
-      "right": ["x", 1],
+      up: ["y", -1],
+      down: ["y", 1],
+      left: ["x", -1],
+      right: ["x", 1],
     };
   }
 
   update(state) {
-    this.updatePosition();
-    this.updateSprite(state);
+    if (this.movingProgressRemaining > 0) {
+      this.updatePosition();
+    } else {
+      //More cases for stating to walk will come here
+      //
+      //
 
-    if (
-      this.isPlayerControlled &&
-      this.movingProgressRemaining === 0 &&
-      state.arrow
-    ) {
-      this.direction = state.arrow;
+      //Case: We're keyboard ready and have an arrow pressed
+      if (this.isPlayerControlled && state.arrow) {
+        this.startBehaviour(state, {
+          type: "walk",
+          direction: state.arrow,
+        });
+      }
+      this.updateSprite(state);
+    }
+  }
+
+  startBehaviour(state, behaviour) {
+    //Set character direction to whatever behaviour has
+    this.direction = behaviour.direction;
+    if (behaviour.type === "walk") {
+      //Stop here if space is not free
+      if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
+        return;
+      }
+
+      //Ready to walk
+      state.map.moveWall(this.x, this.y, this.direction);
       this.movingProgressRemaining = 16;
     }
   }
 
   updatePosition() {
-    if (this.movingProgressRemaining > 0) {
-      const [property, change] = this.directionUpdate[this.direction];
-      this[property] += change;
-      this.movingProgressRemaining -= 1;
-    }
+    const [property, change] = this.directionUpdate[this.direction];
+    this[property] += change;
+    this.movingProgressRemaining -= 1;
   }
 
-  updateSprite(state) {
-    if (
-      this.isPlayerControlled &&
-      this.movingProgressRemaining === 0 &&
-      !state.arrow
-    ) {
-      this.sprite.setAnimation("idle-" + this.direction);
-      return;
-    }
-
+  updateSprite() {
     if (this.movingProgressRemaining > 0) {
       this.sprite.setAnimation("walk-" + this.direction);
+      return;
     }
+    this.sprite.setAnimation("idle-" + this.direction);
   }
 }
