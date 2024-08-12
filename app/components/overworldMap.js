@@ -1,6 +1,6 @@
-import GameObject from "./gameObjects";
-import Overworld from "./overworld";
-import Person from "./person";
+import GameObject from "./GameObjects";
+import Overworld from "./Overworld";
+import Person from "./Person";
 import utils from "./utils";
 
 export default class OverworldMap {
@@ -13,6 +13,8 @@ export default class OverworldMap {
 
     this.upperImage = new Image();
     this.upperImage.src = config.upperSrc;
+
+    this.isCutscenePlaying = false;
   }
 
   drawLowerImage(ctx, cameraPerson) {
@@ -37,9 +39,11 @@ export default class OverworldMap {
   }
 
   mountObjects() {
-    Object.values(this.gameObjects).forEach((o) => {
+    Object.keys(this.gameObjects).forEach((key) => {
+      let object = this.gameObjects[key];
+      object.id = key;
       //TODO: determine if this object should actually mount
-      o.mount(this);
+      object.mount(this);
     });
   }
 
@@ -60,7 +64,7 @@ export default class OverworldMap {
 // Ensure window is only accessed on the client side
 if (typeof window !== "undefined") {
   window.overworldMaps = {
-    demoRoom: {
+    DemoRoom: {
       lowerSrc: "/images/maps/DemoLower.png",
       upperSrc: "/images/maps/DemoUpper.png",
       gameObjects: {
@@ -69,10 +73,28 @@ if (typeof window !== "undefined") {
           x: utils.withGrid(5),
           y: utils.withGrid(6),
         }),
-        npc1: new Person({
-          x: utils.withGrid(9),
-          y: utils.withGrid(7),
+        npcA: new Person({
+          x: utils.withGrid(7),
+          y: utils.withGrid(9),
           src: "/images/characters/people/npc1.png",
+          behaviorLoop: [
+            { type: "stand", direction: "left", time: 800 },
+            { type: "stand", direction: "up", time: 800 },
+            { type: "stand", direction: "right", time: 1200 },
+            { type: "stand", direction: "up", time: 300 },
+          ],
+        }),
+        npcB: new Person({
+          x: utils.withGrid(3),
+          y: utils.withGrid(7),
+          src: "/images/characters/people/npc2.png",
+          behaviorLoop: [
+            { type: "walk", direction: "left" },
+            { type: "stand", direction: "up", time: 800 },
+            { type: "walk", direction: "up" },
+            { type: "walk", direction: "right" },
+            { type: "walk", direction: "down" },
+          ],
         }),
       },
       walls: {
@@ -82,7 +104,7 @@ if (typeof window !== "undefined") {
         [utils.asGridCoords(8, 7)]: true,
       },
     },
-    kitchen: {
+    Kitchen: {
       lowerSrc: "/images/maps/KitchenLower.png",
       upperSrc: "/images/maps/KitchenUpper.png",
       gameObjects: {

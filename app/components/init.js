@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import Overworld from "./overworld";
-import OverworldMap from "./overworldMap";
+import Overworld from "./Overworld";
+import OverworldMap from "./OverworldMap";
 
 export default function Init() {
   useEffect(() => {
