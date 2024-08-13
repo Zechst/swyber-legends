@@ -10,7 +10,6 @@ export default class Overworld {
   }
 
   startGameLoop() {
-    console.log("Game loop started");
 
     const step = () => {
       //Clear off the canvas

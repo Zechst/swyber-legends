@@ -41,16 +41,9 @@ export default class Person extends GameObject {
     if (behavior.type === "walk") {
       //Stop here if space is not free
       if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
-        //  console.log("Space taken, can't move:", this.direction);
         return;
       }
 
-      // Log the move
-      // console.log("Moving in direction:", this.direction);
-      // console.log(
-      //   "Starting movement with progress:",
-      //   this.movingProgressRemaining
-      // );
 
       //Ready to walk
       state.map.moveWall(this.x, this.y, this.direction);
@@ -71,17 +64,7 @@ export default class Person extends GameObject {
     const [property, change] = this.directionUpdate[this.direction];
     this[property] += change;
 
-    // Log position update
-    // console.log(
-    //   "Updated position:",
-    //   { x: this.x, y: this.y },
-    //   "Direction:",
-    //   this.direction
-    // );
-
     this.movingProgressRemaining -= 1;
-
-    //   console.log("Remaining progress:", this.movingProgressRemaining); // Log progress
 
     if (this.movingProgressRemaining === 0) {
       utils.emitEvent("PersonWalkingComplete", { whoId: this.id });
