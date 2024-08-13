@@ -10,6 +10,8 @@ export default class Overworld {
   }
 
   startGameLoop() {
+    console.log("Game loop started");
+
     const step = () => {
       //Clear off the canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -44,6 +46,7 @@ export default class Overworld {
   }
 
   init() {
+    if (this.isGameLoopStarted) return; // Prevent init from running twice
     this.map = new OverworldMap(window.overworldMaps.DemoRoom);
     this.map.mountObjects();
     this.directionInput = new DirectionInput();

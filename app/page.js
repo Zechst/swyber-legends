@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 export default function Main() {
   useEffect(() => {
-    console.log("Main component mounted"); // Debug log
+    //console.log("Main component mounted"); // Debug log
   }, []);
 
   return (
@@ -17,7 +17,7 @@ export default function Main() {
       <div className="w-full h-screen bg-gray-700 flex justify-center items-center">
         <div
           id="game-container"
-          className="game-container w-[352px] h-[198px] relative border-2 rounded-md scale-300 translate-y-1/4"
+          className="game-container w-[352px] h-[198px] relative border-2 rounded-md scale-150 translate-y-1/4"
         >
           <canvas id="game-canvas" className="w-full h-full"></canvas>
         </div>

@@ -4,8 +4,6 @@ import OverworldMap from "./OverworldMap";
 
 export default function Init() {
   useEffect(() => {
-    console.log("Init component mounted"); // Debug log
-
     const gameContainer = document.querySelector("#game-container");
     if (gameContainer) {
       console.log("Game container found"); // Debug log

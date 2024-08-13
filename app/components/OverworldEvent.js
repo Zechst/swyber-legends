@@ -16,18 +16,20 @@ export default class OverworldEvent {
         time: this.event.time,
       }
     );
+    //Set up a handler to complete when correct person is done standing, then resolve the event
+    const completeHandler = (e) => {
+      if (e.detail.whoId === this.event.who) {
+        console.log("Standing event completed for:", this.event.who);
+        document.removeEventListener("PersonStandComplete", completeHandler);
+        resolve();
+      }
+    };
+
+    document.addEventListener("PersonWalkingComplete", completeHandler);
   }
 
   walk(resolve) {
     const who = this.map.gameObjects[this.event.who];
-
-    // Log the walk event
-    console.log(
-      "Walking event started for:",
-      this.event.who,
-      "Direction:",
-      this.event.direction
-    );
 
     who.startBehavior(
       {
@@ -42,8 +44,6 @@ export default class OverworldEvent {
     //Set up a handler to complete when correct person is done walking, then resolve the event
     const completeHandler = (e) => {
       if (e.detail.whoId === this.event.who) {
-        console.log("Walking event completed for:", this.event.who);
-
         document.removeEventListener("PersonWalkingComplete", completeHandler);
         resolve();
       }

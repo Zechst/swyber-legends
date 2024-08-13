@@ -18,7 +18,7 @@ export default class GameObject {
   }
 
   mount(map) {
-    console.log("mounting");
+    // console.log("mounting");
     this.isMounted = true;
     map.addWall(this.x, this.y);
 
@@ -40,7 +40,7 @@ export default class GameObject {
     eventConfig.who = this.id;
 
     // Add log to see the current behavior being processed
-    console.log("Processing behavior:", eventConfig);
+    // console.log("Processing behavior:", eventConfig);
 
     //Create an event instance out of our next event config
     const eventHandler = new OverworldEvent({ map, event: eventConfig });
@@ -53,7 +53,7 @@ export default class GameObject {
     }
 
     // Add log to see the next behavior index
-    console.log("Next behavior index:", this.behaviorLoopIndex);
+    // console.log("Next behavior index:", this.behaviorLoopIndex);
 
     //Do it again!
     this.doBehaviorEvent(map);
